@@ -1,0 +1,17 @@
+// @import "../../styles/variables";
+
+.base {
+  width: 100%;
+  // text-align: center;
+  margin-top: 50px;
+
+  &__wrapper {
+    position: relative;
+    height: 100%;
+    display: table;
+    margin-right: 40px;
+
+    &__controls {
+    }
+  }
+}

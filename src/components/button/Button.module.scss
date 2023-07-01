@@ -1,0 +1,18 @@
+.Button {
+  padding-left: 24px;
+  padding-right: 24px;
+  position: relative;
+  transition: all 200ms linear;
+  cursor: pointer;
+  outline: 0;
+  // text-align: center;
+  // display: inline-block;
+  // text-transform: capitalize;
+
+  &:focus {
+    // box-shadow: none !important;
+  }
+  &:disabled {
+    pointer-events: none;
+  }
+}

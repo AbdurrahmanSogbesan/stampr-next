@@ -6,6 +6,9 @@
 
 // # Option B: Include parts of Bootstrap
 
+// Custom SCSS Maps
+@import "./themes";
+
 // Required
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
