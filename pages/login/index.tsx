@@ -5,10 +5,11 @@ import { RegisterForm } from "@components/RegisterForm";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import extractUserInfo from "src/utils/extractUserInfo";
-import { auth } from "src/config/firebase";
-import { User } from "firebase/auth";
+import { User, getAuth, signInWithPopup } from "firebase/auth";
 import logoSrc from "src/assets/images/logo.svg";
 import styles from "./login.module.scss";
+import { login } from "@redux/slices/user";
+import { provider } from "src/config/firebase";
 
 const LoginPage = () => {
   const [showLogin, setShowLogin] = useState(true);
@@ -16,8 +17,8 @@ const LoginPage = () => {
   const dispatch = useDispatch();
 
   const googleLogin = () => {
-    auth
-      .signInWithPopup(provider)
+    const auth = getAuth();
+    signInWithPopup(auth, provider)
       .then(({ user }) => {
         dispatch(login(extractUserInfo(user as User)));
       })

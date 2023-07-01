@@ -2,6 +2,9 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Button, Input, RouterLink } from "..";
 import extractUserInfo from "src/utils/extractUserInfo";
+import { firebaseLogin } from "src/services/auth";
+import { login } from "@redux/slices/user";
+import { User } from "firebase/auth";
 
 export const LoginForm: React.FC = () => {
   const [email, setEmail] = useState("");

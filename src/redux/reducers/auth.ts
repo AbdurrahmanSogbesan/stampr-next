@@ -15,16 +15,16 @@ interface ResetUserAction {
 
 type AuthAction = SetUserAction | ResetUserAction;
 
-export const initialState: AuthState = {
-  user: JSON.parse(localStorage.getItem("user") || "{}"),
+export const initialState = {
+  ...(JSON.parse(localStorage.getItem("user") as string) || {}),
 };
 
-const authReducer = (state: AuthState, action: AuthAction): AuthState => {
+const authReducer = (state: AuthState, action: AuthAction) => {
   switch (action.type) {
     case "SET_USER":
-      return { ...state, user: { ...state.user, ...action.payload } };
+      return { ...state, ...action.payload };
     case "RESET_USER":
-      return { user: {} };
+      return {};
     default:
       return state;
   }

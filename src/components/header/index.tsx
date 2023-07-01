@@ -3,6 +3,7 @@ import React from "react";
 import { Button } from "..";
 import { RouterLink } from "@components/Link";
 import useAuth from "src/hooks/useAuth";
+import { logout } from "src/services/auth";
 
 interface HeaderProps {
   links?: { text: string; link: string }[];
@@ -39,7 +40,7 @@ export const Header: React.FC<HeaderProps> = ({
             <Button
               variant="danger"
               handleClick={async () => {
-                await logout();
+                logout();
               }}
               label="Log out"
             />

@@ -2,6 +2,9 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Button, Input } from "..";
 import extractUserInfo from "src/utils/extractUserInfo";
+import { register } from "src/services/auth";
+import { login } from "@redux/slices/user";
+import { User } from "firebase/auth";
 
 export const RegisterForm: React.FC = () => {
   const initialCredentials = {

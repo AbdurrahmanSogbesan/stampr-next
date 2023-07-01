@@ -24,7 +24,10 @@ export const userSlice = createSlice({
 
 export const { login, logout, setCanUpload } = userSlice.actions;
 
-export const authUser = (state: { user: { user: User } }) => state.user.user;
+export const authUser = (state: { user: { user: User } }) => {
+  console.log(state);
+  return state.user.user;
+};
 export const isAuthenticated = (state: { user: { user: User } }) =>
   !!state.user?.user?.uid;
 

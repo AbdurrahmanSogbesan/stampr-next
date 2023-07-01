@@ -14,7 +14,8 @@ import { FileUpload } from "@components/FileUpload";
 import { Card } from "@components/Card";
 import { Header } from "@components/Header";
 import logoSrc from "src/assets/images/logo.svg";
-import Icon from "@components/Icon";
+import GithubIcon from "src/components/Icon/icons/github";
+import { getStorageUsage, saveStamp, stampDocument } from "src/services/stamps";
 
 const FILE_LIMIT = 100000;
 
@@ -138,7 +139,14 @@ const Home: React.FC = () => {
             </Card>
           </div> */}
           <div className="col-12">
-            <Footer />
+            <Footer
+              footerLinks={[
+                {
+                  icon: <GithubIcon />,
+                  link: "https://github.com/hmoskva/stampr",
+                },
+              ]}
+            />
           </div>
         </div>
         <StampPositioner

@@ -1,5 +1,5 @@
 import { FirebaseApp, getApps, initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { addDoc, collection, getDocs, getFirestore } from "firebase/firestore";
 import { GoogleAuthProvider, getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 
@@ -27,4 +27,18 @@ const provider = new GoogleAuthProvider();
 
 const storage = getStorage();
 
-export { db, auth, provider, storage };
+const save = async (collectionName: string, data: any) => {
+  await addDoc(collection(db, collectionName), data);
+};
+
+const read = async (collectionName: string) => {
+  const querySnapshot = await getDocs(collection(db, collectionName));
+  const resp: any[] = [];
+  querySnapshot.forEach((doc) => {
+    console.log(`${doc.id} => ${doc.data()}`);
+    resp.push({ ...doc.data(), id: doc.id });
+  });
+  return resp;
+};
+
+export { db, auth, provider, storage, save, read };
