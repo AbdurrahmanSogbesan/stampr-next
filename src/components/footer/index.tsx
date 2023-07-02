@@ -16,6 +16,7 @@ export const Footer: React.FC<FooterProps> = ({ footerLinks }) => {
                 title="Github"
                 href="https://github.com/hmoskva/stampr"
                 target="_blank"
+                rel="noopener"
               >
                 {icon || <GithubIcon />}
               </a>
