@@ -5,12 +5,9 @@ import { Button, Input } from "..";
 import { uploadFile } from "src/config/firebase/helpers";
 import fileSize from "src/utils/fileSize";
 import { truncate } from "src/utils/truncate";
+import { toast } from "react-hot-toast";
 
 interface FileFormProps {
-  // file: {
-  //   size: any;
-  //   name: any;
-  // };
   file: any;
   onStartUpload: () => void;
   onSuccess: (arg: any) => void;
@@ -52,7 +49,8 @@ export const FileForm: React.FC<FileFormProps> = ({
           size: fileSize(file.size),
         });
       }
-    } catch (error) {
+    } catch (error: any) {
+      toast.error(error.message as string);
       console.log(error);
     }
   };

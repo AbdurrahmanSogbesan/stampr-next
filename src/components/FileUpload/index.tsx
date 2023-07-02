@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styles from "./FileUpload.module.scss";
 import { Button, FileForm, Icon, ProgressRing } from "..";
 import fileSize from "src/utils/fileSize";
+import { toast } from "react-hot-toast";
 
 const FILE_SIZE_LIMIT = 10000;
 
@@ -54,6 +55,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
   };
 
   const handleUploadSuccess = (payload: any) => {
+    toast.success("Upload Successful!");
     console.log("FILEFORMSUCCESS");
     if (!doc.documentId) {
       setDoc(payload);
@@ -126,6 +128,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
       }
     } else {
       // todo toast
+      toast.error("File too large");
       alert("File too large");
     }
   };

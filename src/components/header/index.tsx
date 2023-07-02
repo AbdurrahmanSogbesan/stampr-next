@@ -19,6 +19,7 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   const { user } = useAuth();
   const { displayName, email } = user || {};
+
   return (
     <nav className={`py-4 ${styles.Header}`}>
       <RouterLink to="/" className="p-0">
@@ -37,13 +38,7 @@ export const Header: React.FC<HeaderProps> = ({
         {user?.uid ? (
           <div className="d-flex align-items-center">
             <p className="small mb-0 me-2">Hello, {displayName || email}</p>
-            <Button
-              variant="danger"
-              handleClick={async () => {
-                logout();
-              }}
-              label="Log out"
-            />
+            <Button variant="danger" handleClick={logout} label="Log out" />
           </div>
         ) : (
           <>

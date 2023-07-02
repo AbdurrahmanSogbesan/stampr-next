@@ -8,6 +8,7 @@ import {
 import { save } from "src/config/firebase";
 import { USERS } from "src/config/firebase/collections";
 import { logout as logoutUser } from "@redux/slices/user";
+import { toast } from "react-hot-toast";
 
 interface RegisterData {
   first_name: string;
@@ -44,15 +45,6 @@ export const register = ({
         };
         //* Send verification email
         //* Add user to database
-        // todo: prev ver
-        // db.collection(USERS)
-        // .doc(userCredential?.user?.uid)
-        // .set({
-        //   first_name,
-        //   last_name,
-        //   authProvider: "emailAndPassword",
-        //   email,
-        // })
         save(USERS, payload)
           .then(() => {
             console.log("Document successfully written!");
@@ -60,10 +52,12 @@ export const register = ({
           .catch((error) => {
             console.error("Error writing document: ", error);
           });
+        toast.success("Sign up successful!");
         resolve(userCredential.user);
       })
       .catch((error: any) => {
         // return error
+        toast.error(error);
         reject(error);
       });
   });
@@ -75,10 +69,13 @@ export const firebaseLogin = ({ email, password }: LoginData): Promise<any> => {
       .then((userCredentials) => {
         // Signed in
         resolve(userCredentials.user);
+        toast.success("Login Successful");
+
         // ...
       })
       .catch((error: any) => {
         reject(error);
+        toast.error(error);
         // ..
       });
   });
@@ -104,11 +101,10 @@ export const logout = () => {
   signOut(auth)
     .then(() => {
       logoutUser();
-      // todo: toast Sign-out successful.
-      console.log("Logged out.");
+      toast.success("Logout Successful");
     })
     .catch((error) => {
-      // An error happened.
+      toast.error(error);
       console.log("error :>> ", error);
     });
 };

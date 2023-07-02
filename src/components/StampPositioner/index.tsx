@@ -3,6 +3,7 @@ import styles from "./StampPositioner.module.scss";
 import { Button, ColorPicker, Input, Modal } from "..";
 import { StampPreview } from "./StampPreview";
 import { DocumentPreview } from "./DocumentPreview";
+import { toast } from "react-hot-toast";
 
 interface StampPositionerProps {
   stamp?: string;
@@ -41,7 +42,8 @@ export const StampPositioner: React.FC<StampPositionerProps> = ({
       });
       setSubmitting(false);
       handleHide();
-    } catch (error) {
+    } catch (error: any) {
+      toast.error(error.message as string);
       console.log(error);
     } finally {
       setSubmitting(false);

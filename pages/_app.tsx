@@ -3,6 +3,7 @@ import "@styles/app.scss";
 import "@styles/global.scss";
 import { NextComponentType, NextPageContext } from "next";
 import { AppProps } from "next/app";
+import { Toaster } from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Hydrate } from "react-query/hydration";
 import { Provider } from "react-redux";
@@ -21,6 +22,7 @@ function MyApp({ Component, pageProps }: AppPropsType): JSX.Element {
       <Hydrate state={pageProps.dehydratedState}>
         <Provider store={store}>
           <AnyComponent {...pageProps} />
+          <Toaster />
         </Provider>
       </Hydrate>
     </QueryClientProvider>

@@ -10,6 +10,7 @@ import logoSrc from "src/assets/images/logo.svg";
 import styles from "./login.module.scss";
 import { login } from "@redux/slices/user";
 import { provider } from "src/config/firebase";
+import { toast } from "react-hot-toast";
 
 const LoginPage = () => {
   const [showLogin, setShowLogin] = useState(true);
@@ -21,8 +22,12 @@ const LoginPage = () => {
     signInWithPopup(auth, provider)
       .then(({ user }) => {
         dispatch(login(extractUserInfo(user as User)));
+        toast.success("Login Successful");
       })
-      .catch((error) => alert(error.message));
+      .catch((error) => {
+        toast.error(error.message);
+        console.log(error.message);
+      });
   };
 
   const form = (
