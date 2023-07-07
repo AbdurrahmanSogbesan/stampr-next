@@ -1,6 +1,7 @@
 import {
   getDownloadURL,
   ref,
+  StorageReference,
   uploadBytesResumable,
   uploadString,
   UploadTaskSnapshot,
@@ -37,49 +38,55 @@ export const uploadFile = async ({
   setUploadTask = null,
 }: UploadFileOptions): Promise<string> => {
   try {
-    let uploadTask;
-    let fileRef;
+    let uploadTask: Promise<unknown>;
+    let fileRef: StorageReference;
     if (!dataUrl) {
       const filename = `${fileName || file.name}_${new Date().getTime()}`;
       fileRef = ref(storage, `/${storageDirectory}/${filename}/`);
-      uploadTask = uploadBytesResumable(fileRef, file);
+      uploadTask = new Promise((resolve, reject) => {
+        const task = uploadBytesResumable(fileRef, file);
+        if (setUploadTask) {
+          setUploadTask(uploadTask);
+        }
+        task.on(
+          "state_changed",
+          (snapshot: UploadTaskSnapshot) => {
+            const progress = Math.ceil(
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            );
+            switch (snapshot.state) {
+              case "running":
+                if (progressHookFn) {
+                  progressHookFn(progress);
+                }
+                break;
+              default:
+                break;
+            }
+          },
+          (error: any) => {
+            if (errorHookFn) {
+              errorHookFn(error);
+            }
+            reject(error);
+          },
+          () => {
+            if (progressHookFn) {
+              progressHookFn(100);
+            }
+          }
+        );
+        task.then(resolve).catch(reject);
+      });
     } else {
       // todo: uploadString doesnt have $.on function
       fileRef = ref(storage, `${storageDirectory}/${fileName}/`);
       uploadTask = uploadString(fileRef, dataUrl, "data_url");
-    }
-    if (setUploadTask) {
-      setUploadTask(uploadTask);
+      if (setUploadTask) {
+        setUploadTask(uploadTask);
+      }
     }
 
-    uploadTask.on(
-      "state_changed",
-      (snapshot: UploadTaskSnapshot) => {
-        const progress = Math.ceil(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        switch (snapshot.state) {
-          case "running":
-            if (progressHookFn) {
-              progressHookFn(progress);
-            }
-            break;
-          default:
-            break;
-        }
-      },
-      (error: any) => {
-        if (errorHookFn) {
-          errorHookFn(error);
-        }
-        Promise.reject(error);
-      },
-      () => {
-        if (progressHookFn) {
-          progressHookFn(100);
-        }
-      }
-    );
     await uploadTask;
     const downloadUrl = await getDownloadURL(fileRef);
     return downloadUrl;
