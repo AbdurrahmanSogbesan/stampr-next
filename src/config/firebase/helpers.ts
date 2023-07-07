@@ -1,3 +1,10 @@
+import {
+  getDownloadURL,
+  ref,
+  uploadBytesResumable,
+  uploadString,
+  UploadTaskSnapshot,
+} from "firebase/storage";
 import { storage } from ".";
 
 interface UploadFileOptions {
@@ -31,17 +38,15 @@ export const uploadFile = async ({
 }: UploadFileOptions): Promise<string> => {
   try {
     let uploadTask;
+    let fileRef;
     if (!dataUrl) {
       const filename = `${fileName || file.name}_${new Date().getTime()}`;
-      uploadTask = storage
-        .ref()
-        .child(`/${storageDirectory}/${filename}/`)
-        .put(file);
+      fileRef = ref(storage, `/${storageDirectory}/${filename}/`);
+      uploadTask = uploadBytesResumable(fileRef, file);
     } else {
-      uploadTask = storage
-        .ref()
-        .child(`/${storageDirectory}/${fileName}/`)
-        .putString(dataUrl, "data_url");
+      // todo: uploadString doesnt have $.on function
+      fileRef = ref(storage, `${storageDirectory}/${fileName}/`);
+      uploadTask = uploadString(fileRef, dataUrl, "data_url");
     }
     if (setUploadTask) {
       setUploadTask(uploadTask);
@@ -49,11 +54,7 @@ export const uploadFile = async ({
 
     uploadTask.on(
       "state_changed",
-      (snapshot: {
-        bytesTransferred: number;
-        totalBytes: number;
-        state: any;
-      }) => {
+      (snapshot: UploadTaskSnapshot) => {
         const progress = Math.ceil(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
@@ -80,7 +81,7 @@ export const uploadFile = async ({
       }
     );
     await uploadTask;
-    const downloadUrl = await uploadTask.snapshot.ref.getDownloadURL();
+    const downloadUrl = await getDownloadURL(fileRef);
     return downloadUrl;
   } catch (error) {
     console.log(error);

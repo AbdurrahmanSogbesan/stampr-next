@@ -75,7 +75,7 @@ export const firebaseLogin = ({ email, password }: LoginData): Promise<any> => {
       })
       .catch((error: any) => {
         reject(error);
-        toast.error(error);
+        toast.error(error.message);
         // ..
       });
   });

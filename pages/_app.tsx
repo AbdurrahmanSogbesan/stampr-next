@@ -7,6 +7,7 @@ import { Toaster } from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Hydrate } from "react-query/hydration";
 import { Provider } from "react-redux";
+import { AuthProvider } from "src/hooks/useFirebaseAuth";
 
 type AppPropsType = AppProps & {
   Component: NextComponentType<NextPageContext, any, any>;
@@ -21,7 +22,9 @@ function MyApp({ Component, pageProps }: AppPropsType): JSX.Element {
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
         <Provider store={store}>
-          <AnyComponent {...pageProps} />
+          <AuthProvider>
+            <AnyComponent {...pageProps} />
+          </AuthProvider>
           <Toaster />
         </Provider>
       </Hydrate>

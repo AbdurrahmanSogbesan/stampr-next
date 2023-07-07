@@ -23,25 +23,6 @@ const Home: React.FC = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        dispatch(
-          login({
-            uid: user.uid,
-            displayName: user.displayName,
-            email: user.email,
-            photoURL: user.photoURL,
-          })
-        );
-        router.push("/");
-      } else {
-        dispatch(logout());
-        // router.push("/login");
-      }
-    });
-  }, []);
-
   const { user } = useAuth();
 
   const [showPreview, setShowPreview] = useState(false);
