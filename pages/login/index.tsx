@@ -35,9 +35,7 @@ const LoginPage = () => {
       <RouterLink to="/">
         <img className="mb-5" height="40" src={logoSrc.src as any} alt="" />
       </RouterLink>
-      <h1 className="my-auto font-weight-bold">
-        {showLogin ? "Login" : "Register"}
-      </h1>
+      <h1 className="my-auto fw-bold">{showLogin ? "Login" : "Register"}</h1>
       <p className="mb-4 mt-2">{showLogin ? "" : "Let's get you started!"}</p>
       <Button
         rounded
@@ -63,7 +61,7 @@ const LoginPage = () => {
           <div className="small d-flex align-items-center mt-3">
             {showLogin ? `Not registered yet?` : `Already have an account?`}
             <RouterLink
-              className={"px-1"}
+              className={"px-1 text-primary"}
               onClick={() => {
                 setShowLogin(!showLogin);
               }}

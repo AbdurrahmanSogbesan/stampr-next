@@ -41,10 +41,12 @@ export const Header: React.FC<HeaderProps> = ({
             <Button variant="danger" handleClick={logout} label="Log out" />
           </div>
         ) : (
-          <>
-            <RouterLink to="/login">Log in</RouterLink>
+          <div className="d-flex align-items-center">
+            <RouterLink to="/login" className="text-primary me-2">
+              Log in
+            </RouterLink>
             <Button label="Sign Up" />
-          </>
+          </div>
         )}
       </div>
     </nav>
