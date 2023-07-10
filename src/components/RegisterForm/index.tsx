@@ -73,9 +73,7 @@ export const RegisterForm: React.FC = () => {
         onChange={changeValue}
         value={credentials.password}
       ></Input>
-      {error && (
-        <p className="text-center mt-4 font-weight-bold text-danger">{error}</p>
-      )}
+      {error && <p className="text-center mt-4 fw-bold text-danger">{error}</p>}
       <Button type="submit" rounded block label="Register"></Button>
     </form>
   );

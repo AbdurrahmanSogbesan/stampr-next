@@ -46,10 +46,8 @@ export const LoginForm: React.FC = () => {
         onChange={(e) => setPassword(e.target.value)}
         value={password}
       ></Input>
-      {error && (
-        <p className="text-center mt-4 font-weight-bold text-danger">{error}</p>
-      )}
-      <RouterLink className="pt-0 fs-6 text-right mb-3" to="/login">
+      {error && <p className="text-center mt-4 fw-bold text-danger">{error}</p>}
+      <RouterLink className="pt-0 fs-6 text-end mb-3 text-primary" to="/login">
         Forgot Password?
       </RouterLink>
       <Button type="submit" rounded block label="Login"></Button>

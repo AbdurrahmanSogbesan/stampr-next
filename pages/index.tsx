@@ -82,7 +82,7 @@ const Home: React.FC = () => {
             >
               <div className="row justify-content-center">
                 <div className="col-12 col-md-6 text-center text-primary">
-                  <h2 className="font-weight-bold mb-3 px-3 px-md-0">
+                  <h2 className="fw-bold mb-3 px-3 px-md-0">
                     Secure File Upload <br /> Storage & Stamp
                   </h2>
                   <span className="fw-light">

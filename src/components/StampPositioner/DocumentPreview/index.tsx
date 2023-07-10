@@ -18,7 +18,6 @@ export const DocumentPreview = forwardRef(
         drop: (item, monitor) => {
           const offset = monitor.getSourceClientOffset();
           if (offset) {
-            // todo: idk man
             const dropTargetXy = ref?.current.getBoundingClientRect();
             handleDrop({
               x: offset.x - dropTargetXy.left,
