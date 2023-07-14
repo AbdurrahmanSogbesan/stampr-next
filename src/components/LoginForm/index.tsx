@@ -10,10 +10,12 @@ export const LoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    setIsLoading(true);
     event.preventDefault();
     if (!email || !password) {
       throw new Error("Fill in email and password");
@@ -22,9 +24,11 @@ export const LoginForm: React.FC = () => {
     firebaseLogin({ email, password })
       .then((user: User) => {
         dispatch(login(extractUserInfo(user)));
+        setIsLoading(false);
       })
       .catch((error: Error) => {
         setError(error.message);
+        setIsLoading(false);
       });
   };
 
@@ -50,7 +54,14 @@ export const LoginForm: React.FC = () => {
       <RouterLink className="pt-0 fs-6 text-end mb-3 text-primary" to="/login">
         Forgot Password?
       </RouterLink>
-      <Button type="submit" rounded block label="Login"></Button>
+      <Button
+        type="submit"
+        rounded
+        block
+        label="Login"
+        loading={isLoading}
+        disabled={isLoading}
+      ></Button>
     </form>
   );
 };

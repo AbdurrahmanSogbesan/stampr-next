@@ -43,8 +43,8 @@ export const register = ({
           authProvider: "emailAndPassword",
           email,
         };
-        //* Send verification email
-        //* Add user to database
+        // todo: Send verification email
+        // todo: Add user to database
         save(USERS, payload)
           .then(() => {
             console.log("Document successfully written!");
@@ -70,13 +70,10 @@ export const firebaseLogin = ({ email, password }: LoginData): Promise<any> => {
         // Signed in
         resolve(userCredentials.user);
         toast.success("Login Successful");
-
-        // ...
       })
       .catch((error: any) => {
         reject(error);
         toast.error(error.message);
-        // ..
       });
   });
 };
