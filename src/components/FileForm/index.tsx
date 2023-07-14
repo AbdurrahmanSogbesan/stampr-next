@@ -25,7 +25,6 @@ export const FileForm: React.FC<FileFormProps> = ({
   setUploadTask,
 }) => {
   const [name, setName] = useState(file.name);
-  // todo: come back to this 'any'
   const canUpload = useSelector((state: any) => state.user.canUpload);
 
   const handleUpload = async () => {

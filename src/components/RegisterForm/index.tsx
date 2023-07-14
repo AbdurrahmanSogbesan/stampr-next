@@ -16,6 +16,7 @@ export const RegisterForm: React.FC = () => {
 
   const [credentials, setCredentials] = useState({ ...initialCredentials });
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -27,6 +28,7 @@ export const RegisterForm: React.FC = () => {
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    setIsLoading(true);
     event.preventDefault();
     if (!credentials.email || !credentials.password) {
       throw new Error("Fill in email and password");
@@ -35,9 +37,11 @@ export const RegisterForm: React.FC = () => {
     register(credentials)
       .then((user: User) => {
         dispatch(login(extractUserInfo(user)));
+        setIsLoading(false);
       })
       .catch((error: Error) => {
         setError(error.message);
+        setIsLoading(false);
       });
   };
 
@@ -74,7 +78,14 @@ export const RegisterForm: React.FC = () => {
         value={credentials.password}
       ></Input>
       {error && <p className="text-center mt-4 fw-bold text-danger">{error}</p>}
-      <Button type="submit" rounded block label="Register"></Button>
+      <Button
+        type="submit"
+        rounded
+        block
+        label="Register"
+        loading={isLoading}
+        disabled={isLoading}
+      ></Button>
     </form>
   );
 };

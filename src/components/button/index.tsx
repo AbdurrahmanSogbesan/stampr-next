@@ -1,3 +1,4 @@
+import { Spinner } from "react-bootstrap";
 import styles from "./Button.module.scss";
 
 export interface ButtonProps {
@@ -9,6 +10,7 @@ export interface ButtonProps {
   rounded?: boolean;
   disabled?: boolean;
   handleClick?: () => void;
+  loading?: boolean;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -19,6 +21,7 @@ export const Button: React.FC<ButtonProps> = ({
   type,
   block = false,
   rounded,
+  loading,
   ...props
 }) => {
   const componentClass = `btn btn-${variant}`;
@@ -39,8 +42,7 @@ export const Button: React.FC<ButtonProps> = ({
       onClick={handleClick}
       type={type}
     >
-      {/* <Icon icon="play" /> */}
-      {props.label || "Submit"}
+      {loading ? <Spinner size="sm" /> : props.label || "Submit"}
     </button>
   );
 };

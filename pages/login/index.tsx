@@ -14,18 +14,22 @@ import { toast } from "react-hot-toast";
 
 const LoginPage = () => {
   const [showLogin, setShowLogin] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
 
   const googleLogin = () => {
+    setIsLoading(true);
     const auth = getAuth();
     signInWithPopup(auth, provider)
       .then(({ user }) => {
         dispatch(login(extractUserInfo(user as User)));
+        setIsLoading(false);
         toast.success("Login Successful");
       })
       .catch((error) => {
         toast.error(error.message);
+        setIsLoading(false);
         console.log(error.message);
       });
   };
@@ -43,6 +47,8 @@ const LoginPage = () => {
         block
         label={showLogin ? "Sign in with Google" : "Sign up with Google"}
         handleClick={googleLogin}
+        loading={isLoading}
+        disabled={isLoading}
       ></Button>
       <div className="horizontal-text my-5">
         <span className="text-muted small">
