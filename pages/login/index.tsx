@@ -1,7 +1,4 @@
-import { RouterLink } from "@components/Link";
-import { Button } from "@components/Button";
-import { LoginForm } from "@components/LoginForm";
-import { RegisterForm } from "@components/RegisterForm";
+import { RegisterForm, LoginForm, Button, RouterLink } from "@components";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import extractUserInfo from "src/utils/extractUserInfo";

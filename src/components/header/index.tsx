@@ -1,7 +1,7 @@
 import styles from "./Header.module.scss";
 import React from "react";
 import { Button } from "..";
-import { RouterLink } from "@components/Link";
+import { RouterLink } from "@components";
 import useAuth from "src/hooks/useAuth";
 import { logout } from "src/services/auth";
 

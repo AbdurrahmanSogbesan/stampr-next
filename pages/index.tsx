@@ -1,21 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "./index.module.scss";
 import { useDispatch } from "react-redux";
-import { auth } from "src/config/firebase";
-import { login, logout, setCanUpload } from "@redux/slices/user";
+import { setCanUpload } from "@redux/slices/user";
 import { useRouter } from "next/router";
 import useAuth from "src/hooks/useAuth";
 import generateToken from "src/utils/generateToken";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { StampPositioner } from "@components/StampPositioner";
-import { Footer } from "@components/Footer";
-import { FileUpload } from "@components/FileUpload";
-import { Card } from "@components/Card";
-import { Header } from "@components/Header";
 import logoSrc from "src/assets/images/logo.svg";
 import GithubIcon from "src/components/Icon/icons/github";
 import { getStorageUsage, saveStamp, stampDocument } from "src/services/stamps";
+import { Footer, FileUpload, StampPositioner, Header, Card } from "@components";
 
 const FILE_LIMIT = 100000;
 
