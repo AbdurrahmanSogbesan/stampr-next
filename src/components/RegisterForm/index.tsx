@@ -5,6 +5,7 @@ import extractUserInfo from "src/utils/extractUserInfo";
 import { register } from "src/services/auth";
 import { login } from "@redux/slices/user";
 import { User } from "firebase/auth";
+import { toast } from "react-hot-toast";
 
 export const RegisterForm: React.FC = () => {
   const initialCredentials = {
@@ -31,6 +32,8 @@ export const RegisterForm: React.FC = () => {
     setIsLoading(true);
     event.preventDefault();
     if (!credentials.email || !credentials.password) {
+      setIsLoading(false);
+      toast.error("Fill in email and password");
       throw new Error("Fill in email and password");
     }
 
