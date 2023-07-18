@@ -18,8 +18,8 @@ export const LoginForm: React.FC = () => {
     setIsLoading(true);
     event.preventDefault();
     if (!email || !password) {
-      throw new Error("Fill in email and password");
       setIsLoading(false);
+      throw new Error("Fill in email and password");
     }
 
     firebaseLogin({ email, password })
