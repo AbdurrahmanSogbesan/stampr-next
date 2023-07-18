@@ -5,6 +5,7 @@ import extractUserInfo from "src/utils/extractUserInfo";
 import { firebaseLogin } from "src/services/auth";
 import { login } from "@redux/slices/user";
 import { User } from "firebase/auth";
+import { toast } from "react-hot-toast";
 
 export const LoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -19,6 +20,7 @@ export const LoginForm: React.FC = () => {
     event.preventDefault();
     if (!email || !password) {
       setIsLoading(false);
+      toast.error("Fill in email and password");
       throw new Error("Fill in email and password");
     }
 
