@@ -78,6 +78,7 @@ const Home: React.FC = () => {
           href="https://fonts.googleapis.com/css2?family=Spartan:wght@300;400;500;600&display=swap"
           rel="stylesheet"
         />
+        <link rel="icon" href="/favicon.png" />
       </Head>
       <DndProvider backend={HTML5Backend}>
         <div className={`container position-relative ${styles.Main}`}>

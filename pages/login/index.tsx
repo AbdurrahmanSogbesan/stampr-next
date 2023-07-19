@@ -71,6 +71,7 @@ const LoginPage = () => {
           href="https://fonts.googleapis.com/css2?family=Spartan:wght@300;400;500;600&display=swap"
           rel="stylesheet"
         />
+        <link rel="icon" href="/favicon.png" />
       </Head>
       <div className={`px-3 px-md-0`}>
         <div className={`row align-items-center ${styles.Main}`}>
