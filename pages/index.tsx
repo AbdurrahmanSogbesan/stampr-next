@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styles from "./index.module.scss";
 import { useDispatch } from "react-redux";
 import { setCanUpload } from "@redux/slices/user";
-import { useRouter } from "next/router";
 import useAuth from "src/hooks/useAuth";
 import generateToken from "src/utils/generateToken";
 import { DndProvider } from "react-dnd";
@@ -11,12 +10,12 @@ import logoSrc from "src/assets/images/logo.svg";
 import GithubIcon from "src/components/Icon/icons/github";
 import { getStorageUsage, saveStamp, stampDocument } from "src/services/stamps";
 import { Footer, FileUpload, StampPositioner, Header, Card } from "@components";
+import Head from "next/head";
 
 const FILE_LIMIT = 100000;
 
 const Home: React.FC = () => {
   const dispatch = useDispatch();
-  const router = useRouter();
 
   const { user } = useAuth();
 
@@ -66,40 +65,54 @@ const Home: React.FC = () => {
   };
 
   return (
-    <DndProvider backend={HTML5Backend}>
-      <div className={`container position-relative ${styles.Main}`}>
-        <Header links={headerLinks} src={logoSrc.src as any} />
-        <div className="row mt-3 mb-5 mb-md-0">
-          <div className="col-12">
-            <Card
-              className={`${styles.Hero} py-5 px-3 px-md-5`}
-              bgColor="#ace4da45"
-            >
-              <div className="row justify-content-center">
-                <div className="col-12 col-md-6 text-center text-primary">
-                  <h2 className="fw-bold mb-3 px-3 px-md-0">
-                    Secure File Upload <br /> Storage & Stamp
-                  </h2>
-                  <span className="fw-light">
-                    Get Premium Account today. Check out our awesome deal
-                  </span>
-                  <FileUpload
-                    className={`${styles.HeroFileUpload} shadow-sm`}
-                    handleSuccess={(payload) => {
-                      setDocPreview({
-                        ...payload,
-                      });
-                      setShowPreview(true);
-                    }}
-                    onFileChange={(size) => checkFileLimit(size)}
-                  />
+    <>
+      <Head>
+        <title>Home</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          // crossOrigin="use-credentials"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Spartan:wght@300;400;500;600&display=swap"
+          rel="stylesheet"
+        />
+      </Head>
+      <DndProvider backend={HTML5Backend}>
+        <div className={`container position-relative ${styles.Main}`}>
+          <Header links={headerLinks} src={logoSrc.src as any} />
+          <div className="row mt-3 mb-5 mb-md-0">
+            <div className="col-12">
+              <Card
+                className={`${styles.Hero} py-5 px-3 px-md-5`}
+                bgColor="#ace4da45"
+              >
+                <div className="row justify-content-center">
+                  <div className="col-12 col-md-6 text-center text-primary">
+                    <h2 className="fw-bold mb-3 px-3 px-md-0">
+                      Secure File Upload <br /> Storage & Stamp
+                    </h2>
+                    <span className="fw-light">
+                      Get Premium Account today. Check out our awesome deal
+                    </span>
+                    <FileUpload
+                      className={`${styles.HeroFileUpload} shadow-sm`}
+                      handleSuccess={(payload) => {
+                        setDocPreview({
+                          ...payload,
+                        });
+                        setShowPreview(true);
+                      }}
+                      onFileChange={(size) => checkFileLimit(size)}
+                    />
+                  </div>
                 </div>
-              </div>
-            </Card>
+              </Card>
+            </div>
           </div>
-        </div>
-        <div className={`row justify-content-center ${styles.FooterCard}`}>
-          {/* <div className="col-12 col-md-6 ">
+          <div className={`row justify-content-center ${styles.FooterCard}`}>
+            {/* <div className="col-12 col-md-6 ">
             <Card
               bgColor="#ff76762e"
               className="py-5 px-3 px-md-5 d-flex justify-content-between align-items-center flex-column flex-md-row"
@@ -114,36 +127,43 @@ const Home: React.FC = () => {
               />
             </Card>
           </div> */}
-          <div className="col-12">
-            <Footer
-              footerLinks={[
-                {
-                  icon: <GithubIcon />,
-                  link: "https://github.com/hmoskva/stampr",
-                },
-              ]}
-            />
+            <div className="col-12">
+              <Footer
+                footerLinks={[
+                  {
+                    icon: <GithubIcon />,
+                    link: "https://github.com/hmoskva/stampr",
+                  },
+                ]}
+              />
+            </div>
           </div>
-        </div>
-        <StampPositioner
-          stamp={stampUrl}
-          doc={documentUrl}
-          show={showPreview}
-          handleHide={() => setShowPreview(false)}
-          handleSubmit={({ stampPosition, width, height, customText, color }) =>
-            createStamp({
-              ...docPreview,
-              ...stampPosition,
-              userId: user?.uid || "",
+          <StampPositioner
+            stamp={stampUrl}
+            doc={documentUrl}
+            show={showPreview}
+            handleHide={() => setShowPreview(false)}
+            handleSubmit={({
+              stampPosition,
               width,
               height,
               customText,
               color,
-            })
-          }
-        />
-      </div>
-    </DndProvider>
+            }) =>
+              createStamp({
+                ...docPreview,
+                ...stampPosition,
+                userId: user?.uid || "",
+                width,
+                height,
+                customText,
+                color,
+              })
+            }
+          />
+        </div>
+      </DndProvider>
+    </>
   );
 };
 

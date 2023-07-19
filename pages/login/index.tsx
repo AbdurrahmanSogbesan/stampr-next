@@ -8,6 +8,7 @@ import styles from "./login.module.scss";
 import { login } from "@redux/slices/user";
 import { provider } from "src/config/firebase";
 import { toast } from "react-hot-toast";
+import Head from "next/head";
 
 const LoginPage = () => {
   const [showLogin, setShowLogin] = useState(true);
@@ -57,28 +58,43 @@ const LoginPage = () => {
   );
 
   return (
-    <div className={`px-3 px-md-0`}>
-      <div className={`row align-items-center ${styles.Main}`}>
-        <div className="col-12 col-md-6 px-md-7 px-xl-10 ">
-          {form}
-          <div className="small d-flex align-items-center mt-3">
-            {showLogin ? `Not registered yet?` : `Already have an account?`}
-            <RouterLink
-              className={"px-1 text-primary"}
-              onClick={() => {
-                setShowLogin(!showLogin);
-              }}
-              to="/login"
-            >
-              {showLogin ? `Create an account` : `Login now`}
-            </RouterLink>
+    <>
+      <Head>
+        <title>Login</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          // crossOrigin="use-credentials"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Spartan:wght@300;400;500;600&display=swap"
+          rel="stylesheet"
+        />
+      </Head>
+      <div className={`px-3 px-md-0`}>
+        <div className={`row align-items-center ${styles.Main}`}>
+          <div className="col-12 col-md-6 px-md-7 px-xl-10 ">
+            {form}
+            <div className="small d-flex align-items-center mt-3">
+              {showLogin ? `Not registered yet?` : `Already have an account?`}
+              <RouterLink
+                className={"px-1 text-primary"}
+                onClick={() => {
+                  setShowLogin(!showLogin);
+                }}
+                to="/login"
+              >
+                {showLogin ? `Create an account` : `Login now`}
+              </RouterLink>
+            </div>
           </div>
+          <div
+            className={`d-none d-md-block col-12 col-md-6 h-100 ${styles["Auth-bg"]}`}
+          ></div>
         </div>
-        <div
-          className={`d-none d-md-block col-12 col-md-6 h-100 ${styles["Auth-bg"]}`}
-        ></div>
       </div>
-    </div>
+    </>
   );
 };
 
