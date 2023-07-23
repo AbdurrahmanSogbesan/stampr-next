@@ -1,7 +1,12 @@
 .Input {
   height: 40px;
-  border: 1px solid #eee;
+  border: 1px solid;
   border-radius: 999px;
   outline: none;
   padding: 0 15px;
+}
+
+.Error {
+  color: red;
+  font-size: 12px;
 }

@@ -52,12 +52,10 @@ export const register = ({
           .catch((error) => {
             console.error("Error writing document: ", error);
           });
-        toast.success("Sign up successful!");
         resolve(userCredential.user);
       })
       .catch((error: any) => {
         // return error
-        toast.error(error);
         reject(error);
       });
   });
@@ -69,11 +67,9 @@ export const firebaseLogin = ({ email, password }: LoginData): Promise<any> => {
       .then((userCredentials) => {
         // Signed in
         resolve(userCredentials.user);
-        toast.success("Login Successful");
       })
       .catch((error: any) => {
         reject(error);
-        toast.error(error.message);
       });
   });
 };

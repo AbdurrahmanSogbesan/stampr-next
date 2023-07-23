@@ -1,3 +1,4 @@
+import { FormikTouched } from "formik";
 import styles from "./Input.module.scss";
 
 interface InputProps {
@@ -9,6 +10,9 @@ interface InputProps {
   value?: string | number;
   onChange: (e: any) => void;
   customClass?: string;
+  error?: string;
+  touched?: boolean | FormikTouched<any> | FormikTouched<any>[] | undefined;
+  onBlur?: React.FocusEventHandler<HTMLInputElement> | undefined;
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -20,6 +24,9 @@ export const Input: React.FC<InputProps> = ({
   id,
   placeholder,
   customClass,
+  error,
+  touched,
+  onBlur,
 }) => {
   return (
     <div className={customClass}>
@@ -30,11 +37,18 @@ export const Input: React.FC<InputProps> = ({
         id={id}
         type={type}
         name={name}
-        className={`${styles.Input} form-control mb-4`}
+        className={`${styles.Input} form-control ${
+          error && touched ? "mb-1" : "mb-4"
+        }`}
         value={value}
         placeholder={placeholder}
         onChange={(e) => onChange(e)}
+        onBlur={onBlur}
+        style={
+          error && touched ? { borderColor: "red" } : { borderColor: "#eee" }
+        }
       />
+      {error && touched && <small className={styles.Error}>{error}</small>}
     </div>
   );
 };
