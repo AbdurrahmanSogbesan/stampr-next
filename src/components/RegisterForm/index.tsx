@@ -1,93 +1,78 @@
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Button, Input } from "..";
 import extractUserInfo from "src/utils/extractUserInfo";
 import { register } from "src/services/auth";
 import { login } from "@redux/slices/user";
-import { User } from "firebase/auth";
 import { toast } from "react-hot-toast";
+import { useFormik } from "formik";
+import RegisterSchema from "src/schemas/register";
 
 export const RegisterForm: React.FC = () => {
-  const initialCredentials = {
+  const dispatch = useDispatch();
+
+  const registerFormInitialValues = {
     first_name: "",
     last_name: "",
     email: "",
     password: "",
   };
 
-  const [credentials, setCredentials] = useState({ ...initialCredentials });
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const formik = useFormik({
+    initialValues: registerFormInitialValues,
+    validationSchema: RegisterSchema,
+    onSubmit: async (values, { setSubmitting }) => {
+      setSubmitting(true);
+      try {
+        const user = await register(values);
+        if (user) {
+          dispatch(login(extractUserInfo(user)));
+          toast.success("Sign up successful!");
+        }
+        setSubmitting(false);
+      } catch (error: any) {
+        setSubmitting(false);
+        toast.error(error.message);
+      }
+    },
+  });
 
-  const dispatch = useDispatch();
-
-  const changeValue = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCredentials({
-      ...credentials,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    setIsLoading(true);
-    event.preventDefault();
-    if (!credentials.email || !credentials.password) {
-      setIsLoading(false);
-      toast.error("Fill in email and password");
-      throw new Error("Fill in email and password");
-    }
-
-    register(credentials)
-      .then((user: User) => {
-        dispatch(login(extractUserInfo(user)));
-        setIsLoading(false);
-      })
-      .catch((error: Error) => {
-        setError(error.message);
-        setIsLoading(false);
-      });
-  };
+  const { isSubmitting, isValid, getFieldMeta, getFieldProps } = formik;
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={formik.handleSubmit}>
       <Input
         label="First Name"
-        name="first_name"
         placeholder=""
         type="text"
-        onChange={changeValue}
-        value={credentials.first_name}
+        {...getFieldProps("first_name")}
+        {...getFieldMeta("first_name")}
       ></Input>
       <Input
         label="Last Name"
-        name="last_name"
         type="text"
-        onChange={changeValue}
-        value={credentials.last_name}
+        {...getFieldProps("last_name")}
+        {...getFieldMeta("last_name")}
       ></Input>
       <Input
         label="Email"
-        name="email"
         type="email"
         placeholder="john@gmail.com"
-        onChange={changeValue}
-        value={credentials.email}
+        {...getFieldProps("email")}
+        {...getFieldMeta("email")}
       ></Input>
       <Input
         label="Password"
-        name="password"
         type="password"
-        onChange={changeValue}
-        value={credentials.password}
+        {...getFieldProps("password")}
+        {...getFieldMeta("password")}
       ></Input>
-      {error && <p className="text-center mt-4 fw-bold text-danger">{error}</p>}
       <Button
         type="submit"
         rounded
         block
         label="Register"
-        loading={isLoading}
-        disabled={isLoading}
+        loading={isSubmitting}
+        disabled={isSubmitting || !isValid}
       ></Button>
     </form>
   );
