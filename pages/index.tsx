@@ -86,11 +86,11 @@ const Home: React.FC = () => {
           <div className="row mt-3 mb-5 mb-md-0">
             <div className="col-12">
               <Card
-                className={`${styles.Hero} py-5 px-3 px-md-5`}
+                className={`${styles.Hero} pt-5 pb-sm-5 pb-3 px-3 px-md-5`}
                 bgColor="#ace4da45"
               >
                 <div className="row justify-content-center">
-                  <div className="col-12 col-md-6 text-center text-primary">
+                  <div className="col-lg-6 col-md-8 col-sm-10 col-xs-12  text-center text-primary">
                     <h2 className="fw-bold mb-3 px-3 px-md-0">
                       Secure File Upload <br /> Storage & Stamp
                     </h2>
