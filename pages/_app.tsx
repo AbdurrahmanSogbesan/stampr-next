@@ -30,10 +30,9 @@ function MyApp({ Component, pageProps }: AppPropsType): JSX.Element {
     const handleRouteChange = (url: string) => {
       setLoading(true);
     };
-    console.log(loading);
 
     const handleRouteChangeComplete = () => {
-      setLoading(false);
+      setTimeout(() => setLoading(false), 1500);
     };
 
     router.events.on("routeChangeStart", handleRouteChange);
@@ -44,8 +43,6 @@ function MyApp({ Component, pageProps }: AppPropsType): JSX.Element {
       router.events.off("routeChangeComplete", handleRouteChangeComplete);
     };
   }, [router.events]);
-
-  console.log(loading);
 
   return (
     <QueryClientProvider client={queryClient}>
