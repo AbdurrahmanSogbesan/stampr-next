@@ -75,15 +75,14 @@ const LoginPage = () => {
             {form}
             <div className="small d-flex align-items-center mt-3">
               {showLogin ? `Not registered yet?` : `Already have an account?`}
-              <RouterLink
-                className={"px-1 text-primary"}
+              <span
+                className={`px-1 text-primary ${styles["link-pointer"]}`}
                 onClick={() => {
                   setShowLogin(!showLogin);
                 }}
-                to="/login"
               >
                 {showLogin ? `Create an account` : `Login now`}
-              </RouterLink>
+              </span>
             </div>
           </div>
           <div

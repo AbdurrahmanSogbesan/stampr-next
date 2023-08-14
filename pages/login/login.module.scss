@@ -6,6 +6,15 @@
   background: url("../../src/assets/images/auth-bg.jpg") center center/cover
     no-repeat padding-box border-box;
 }
+
+.link-pointer {
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 // .Hero {
 //   max-height: 400px;
 //   @media (max-width: 480px) {
