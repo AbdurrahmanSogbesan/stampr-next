@@ -16,3 +16,4 @@ export { Modal } from "./Modal";
 export { ProgressRing } from "./ProgressRing";
 export { RegisterForm } from "./RegisterForm";
 export { StampPositioner } from "./StampPositioner";
+export { Loader } from './Loader'

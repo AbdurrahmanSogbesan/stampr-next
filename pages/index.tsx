@@ -129,7 +129,7 @@ const Home: React.FC = () => {
                 footerLinks={[
                   {
                     icon: <GithubIcon />,
-                    link: "https://github.com/hmoskva/stampr",
+                    link: "https://github.com/AbdurrahmanSogbesan/stampr-next",
                   },
                 ]}
               />
